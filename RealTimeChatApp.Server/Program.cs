@@ -87,7 +87,7 @@ var endpoint = new Uri(builder.Configuration["CognitiveServices:Endpoint"]!);
 var credential = new AzureKeyCredential(builder.Configuration["CognitiveServices:Key"]!);
 builder.Services.AddSingleton(new TextAnalyticsClient(endpoint, credential));
 
-builder.Services.AddSignalR().AddAzureSignalR();
+builder.Services.AddSignalR().AddAzureSignalR(builder.Configuration.GetConnectionString("Azure:SignalR"));
 
 var app = builder.Build();
 
