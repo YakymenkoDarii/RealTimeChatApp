@@ -1,0 +1,63 @@
+﻿# --- Секретні файли Production (За вашим запитом) ---
+# Блокує файл конфігурації C# Production
+appsettings.Production.json
+
+# Блокує файл конфігурації Angular Production
+# (Шукає його в будь-якій підпапці, зазвичай src/environments)
+**/environment.production.ts
+
+
+# --- Стандартні винятки Visual Studio (.NET) ---
+## Microsoft Visual Studio
+.vs/
+*.sln.docstates
+*.suo
+*.user
+*.userosscache
+*.sln.results
+*.[Cc]ache
+*.orig
+*~
+*.swp
+*.dbmdl
+*.zip
+[Bb]in/
+[Dd]ebug/
+[Rr]elease/
+[Dd]ebug[Pp]ublic/
+[Rr]elease[Pp]ublic/
+[Xx]64/
+[Xx]86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+[Tt]est[Rr]esult*/
+_ReSharper*/
+packages/
+*.nupkg
+*.nuget.props
+*.nuget.targets
+
+# Виключення для папки .idea (JetBrains Rider)
+.idea/
+
+# --- Стандартні винятки Angular (Node.js) ---
+# Залежності
+node_modules/
+
+# Логи
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Папки збірки
+dist/
+dist-ssr/
+.angular/
+
+# Кеш
+.npm/
+.eslintcache

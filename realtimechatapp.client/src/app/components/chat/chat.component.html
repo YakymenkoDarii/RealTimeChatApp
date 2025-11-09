@@ -1,0 +1,87 @@
+<div class="chat-container">
+
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h3>Чати</h3>
+      <button (click)="logout()" class="logout-btn" title="Вийти">🚪</button>
+    </div>
+
+    <div class="user-list">
+      <div *ngFor="let user of onlineUsers$ | async"
+           class="user-item"
+           (click)="selectUser(user)"
+           [class.selected]="user.id === selectedUser?.id">
+
+        <img [src]="user.profilePicture" alt="avatar" class="avatar">
+
+        <div class="user-info">
+          <span class="username">{{ user.fullName }}</span>
+          <span class="status-dot" [class.online]="user.isOnline"></span>
+        </div>
+
+        <div *ngIf="user.unreadCount > 0" class="unread-badge">
+          {{ user.unreadCount }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chat-window">
+
+    <div *ngIf="!selectedUser" class="no-chat-selected">
+      <img src="https://placehold.co/100x100/f0f2f5/ccc?text=Chat" alt="Chat" style="width: 100px; opacity: 0.5; border-radius: 50%;">
+      <h3>Оберіть чат, щоб почати спілкування</h3>
+    </div>
+
+    <div *ngIf="selectedUser" class="chat-area">
+
+      <div class="chat-header">
+        <img [src]="selectedUser?.profilePicture" alt="avatar" class="avatar">
+        <div class="user-info">
+          <span class="username">{{ selectedUser?.fullName }}</span>
+          <span *ngIf="(typing$ | async)?.user === selectedUser?.userName && (typing$ | async)?.isTyping"
+                class="typing-indicator">
+            друкує...
+          </span>
+        </div>
+      </div>
+
+      <div class="message-list">
+
+
+        <div *ngFor="let msg of messages$ | async" class="message-wrapper">
+          <div class="message"
+               [ngClass]="{
+              'sent': msg.senderId !== selectedUser?.id,
+              'received': msg.senderId === selectedUser?.id
+            }">
+
+            <div class="sentiment-wrapper">
+              <span *ngIf="msg.sentiment === 'positive'" class="sentiment">😊</span>
+              <span *ngIf="msg.sentiment === 'negative'" class="sentiment">😠</span>
+              <span *ngIf="msg.sentiment === 'neutral'" class="sentiment">😐</span>
+            </div>
+
+            <p>{{ msg.content }}</p>
+
+            <span class="timestamp">{{ msg.createdDate | date:'HH:mm' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="message-input">
+        <input type="text"
+               placeholder="Введіть ваше повідомлення..."
+               [(ngModel)]="messageContent"
+               (input)="onTyping()"
+               (keydown.enter)="sendMessage()">
+
+        <button (click)="sendMessage()" [disabled]="!messageContent.trim()">
+          Надіслати
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>

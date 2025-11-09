@@ -1,0 +1,103 @@
+<div class="register-container">
+  <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="register-form">
+    <h2>Реєстрація</h2>
+
+    <div class="form-group">
+      <label for="fullname">Повне ім'я</label>
+      <input type="text"
+             id="fullname"
+             name="fullname"
+             [(ngModel)]="registerData.fullname"
+             placeholder="Тарас Шевченко"
+             required
+             #fullname="ngModel">
+      <div *ngIf="fullname.invalid && (fullname.dirty || fullname.touched)" class="error-text">
+        <span *ngIf="fullname.errors?.['required']">
+          Повне ім'я є обов'язковим полем.
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email"
+             id="email"
+             name="email"
+             [(ngModel)]="registerData.email"
+             placeholder="example@mail.com"
+             required
+             email
+             #email="ngModel">
+      <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error-text">
+        <span *ngIf="email.errors?.['required']">
+          Email є обов'язковим полем.
+        </span>
+        <span *ngIf="email.errors?.['email']">
+          Будь ласка, введіть коректний Email.
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="userName">Ім'я користувача</label>
+      <input type="text"
+             id="userName"
+             name="userName"
+             [(ngModel)]="registerData.userName"
+             placeholder="kobzar_ua"
+             required
+             #userName="ngModel">
+      <div *ngIf="userName.invalid && (userName.dirty || userName.touched)" class="error-text">
+        <span *ngIf="userName.errors?.['required']">
+          Ім'я користувача є обов'язковим полем.
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="password-label-wrapper">
+        <label for="password">Пароль</label>
+        <button type="button" (click)="showPassword = !showPassword" class="password-toggle-btn">
+          {{ showPassword ? 'Сховати' : 'Показати' }}
+        </button>
+      </div>
+      <input [type]="showPassword ? 'text' : 'password'"
+             id="password"
+             name="password"
+             [(ngModel)]="registerData.password"
+             placeholder="••••••••"
+             required
+             minlength="6"
+             #password="ngModel">
+      <div *ngIf="password.invalid && (password.dirty || password.touched)" class="error-text">
+        <span *ngIf="password.errors?.['required']">
+          Пароль є обов'язковим полем.
+        </span>
+        <span *ngIf="password.errors?.['minlength']">
+          Пароль має містити щонайменше 6 символів.
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="profileImage">Фото профілю (необов'язково)</label>
+      <input type="file"
+             id="profileImage"
+             (change)="onFileSelected($event)"
+             class="file-input">
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <button type="submit" [disabled]="registerForm.invalid" class="submit-btn">
+      Зареєструватись
+    </button>
+  </form>
+
+  <div class="login-link">
+    <span>Вже маєте акаунт?</span>
+    <a routerLink="/login">Увійти</a>
+  </div>
+</div>
