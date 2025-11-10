@@ -8,6 +8,7 @@
 		<SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>
 		<SpaProxyServerUrl>https://localhost:4200</SpaProxyServerUrl>
 		<UserSecretsId>6ee1a766-f101-4b7d-8c22-89bda56c25a1</UserSecretsId>
+		<StaticWebAssetBasePath>/</StaticWebAssetBasePath>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -32,4 +33,20 @@
 			<ReferenceOutputAssembly>false</ReferenceOutputAssembly>
 		</ProjectReference>
 	</ItemGroup>
+
+	<Target Name="PublishSpaAssets" AfterTargets="ComputeFilesToPublish">
+		<Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+
+		<Exec WorkingDirectory="$(SpaRoot)" Command="npm run build" />
+
+		<ItemGroup>
+			<SpaDistFiles Include="$(SpaRoot)\dist\realtimechatapp.client\**" />
+			<ResolvedFileToPublish Include="@(SpaDistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+				<RelativePath>wwwroot\%(RecursiveDir)%(FileName)%(Extension)</RelativePath>
+				<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+				<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			</ResolvedFileToPublish>
+		</ItemGroup>
+	</Target>
+
 </Project>
