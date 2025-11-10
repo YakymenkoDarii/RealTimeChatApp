@@ -2,9 +2,6 @@
 # Блокує файл конфігурації C# Production
 appsettings.Production.json
 
-# Блокує файл конфігурації Angular Production
-# (Шукає його в будь-якій підпапці, зазвичай src/environments)
-**/environment.production.ts
 
 
 # --- Стандартні винятки Visual Studio (.NET) ---
